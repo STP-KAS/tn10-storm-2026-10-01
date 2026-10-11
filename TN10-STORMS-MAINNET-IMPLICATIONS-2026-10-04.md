@@ -35,7 +35,7 @@ Mainnet protocol inputs (block rate, mass limits, relay floor) were read from ru
 |---|---|---|---|
 | **Hashrate** | TN10 47.8 MH/s at 2 Oct 07:45 UTC (`analysis/desk-public-read-2026-10-02.md` §3) | 338,836.66 TH/s at the same read (same file). About 7×10⁹ times TN10 | Mining share, fee recapture and "who includes the flood" do not transfer |
 | **Our mining share** | 50–63% of blocks n0 saw while our box miners ran; 0.6% after they stopped; 25.1% over leg 1 (this repo's `README.md` §3, `data/block_share_*.csv`) | A storm sender would normally have ~0% | On TN10 our miners mostly included our own txs. On mainnet nobody does that for the attacker |
-| **Fee recapture** | Round 7 measured our miners collecting **85% of all fees with 53% of blocks** in a 10-min window (`tn10-vprogs-round7-ideas/README.md` l.79–93). Oct storm estimate 56.6% (inference, public report §3) | 0 for a sender with no hashrate (protocol logic, not tested) | TN10 net cost was much lower than gross. Mainnet bills must use gross |
+| **Fee recapture** | Round 7 measured our miners collecting **85% of all fees with 53% of blocks** in a 10-min window (`tn10-storm-2026-09-26-r7/README.md` l.79–93). Oct storm estimate 56.6% (inference, public report §3) | 0 for a sender with no hashrate (protocol logic, not tested) | TN10 net cost was much lower than gross. Mainnet bills must use gross |
 | **Node count and peer diversity** | One node of ours (n0, `--outpeers=6 --maxinpeers=24`, break-test `logs/round4/n0-resync-2026-10-03.md`). Five public TN10 kaspad 2.1.0 nodes seen on 2 Oct (muon, vector, proton, neutrino, boson), holding very different mempools at the same moment (34,684 to 401,448 at 07:10 UTC; private desk notes, 2 Oct) | Not measured by us. Mainnet node count is unknown in our data | Propagation of a flood across many independent nodes was never tested |
 | **Block rate** | About 10 blocks/s: 10.85 blocks/s in round 7 (README l.71); 10.9 blue steps/s on api-tn10 (desk read §1) | 10 blocks/s in `MAINNET_PARAMS` (rusty-kaspa `01b532e`) | Similar. This is the one factor that lines up well |
 | **Our box (n0)** | 8 vCPU, 16 GB RAM, 126 GB disk shared by n0, miners, runners, samplers (public report, Hardware used). `--ram-scale=0.1` (mempool cap 100k vs default 1M) | Real nodes vary | Every Oct leg ended on our own disk or RAM guard, not on a network limit |
@@ -76,15 +76,15 @@ Mainnet protocol inputs (block rate, mass limits, relay floor) were read from ru
 - **Mainnet:** fee priority protecting higher-fee users: **B** (same mempool ordering code; but one node, own flood, tiny cap). The "24 KAS per 10 min" mainnet estimate in that file is **wrong** (used a 1 sompi/g floor; see corrections). Unique September throughput: **C**.
 
 ### 3. Rounds 2–6, 25–26 Sep 2026
-- **Round 2** (22:47 25 Sep–06:31 26 Sep): network 10-s samples median 1,548, mean 2,507, peak 12,175 (Processed counter; `grok-bot-vprogs-round2/README.md`). Ended on a disk taper at 9.5→8.4 GB. ~197,800 tKAS fees.
-- **Round 3:** vprogs under storm; upstream tic-tac-toe finished 5 games under full storm; own guest executed 0 impossible debits (exec mode, proofs off) (`grok-bot-vprogs-round3/README.md`; `tn10-vprogs-final-verdict/README.md`).
-- **Round 4** (26 Sep): paced 6× fee run, **1,219 accepted tx/s for 1 h 32 min** (07:46:20–09:18:15), ~6.7M txs; pruning/compaction needed >15 GB transient disk (`grok-bot-vprogs-round4/README.md`).
+- **Round 2** (22:47 25 Sep–06:31 26 Sep): network 10-s samples median 1,548, mean 2,507, peak 12,175 (Processed counter; `tn10-storm-2026-09-25-r2/README.md`). Ended on a disk taper at 9.5→8.4 GB. ~197,800 tKAS fees.
+- **Round 3:** vprogs under storm; upstream tic-tac-toe finished 5 games under full storm; own guest executed 0 impossible debits (exec mode, proofs off) (`tn10-storm-2026-09-26-r3/README.md`; `tn10-storm-2026-09-26-verdict/README.md`).
+- **Round 4** (26 Sep): paced 6× fee run, **1,219 accepted tx/s for 1 h 32 min** (07:46:20–09:18:15), ~6.7M txs; pruning/compaction needed >15 GB transient disk (`tn10-storm-2026-09-26-r4/README.md`).
 - **Round 5** (09:22–10:35): own index-free runners, 1,036,520 accepted of 1,039,575; storm fees at 20,000–60,000 sompi/g (`round5/README.md`).
 - **Round 6** (10:35–13:16): **10,058,024 accepted in ~159 min**, ~1,191 tx/s full-gusto, ~1,057 whole round (`round6/README.md`).
 - **Mainnet:** none of these rates is a mainnet capacity statement. They are what one box pushed through n0 on TN10 (A for TN10 only). vprog client behaviour under a mainnet fee market: **C**.
 
 ### 4. Round 7 measurements, 26 Sep 2026
-- **Measured (A, TN10):** three TPS columns over 20 min: unique selected-chain accepted **267.2/s**, Processed block-body **357.2/s** (B/A **1.337**), our senders 205.0/s. Fee window: our miners took **85% of fees with 53% of blocks**; net fee cost −63 tKAS (`tn10-vprogs-round7-ideas/README.md` l.64–93).
+- **Measured (A, TN10):** three TPS columns over 20 min: unique selected-chain accepted **267.2/s**, Processed block-body **357.2/s** (B/A **1.337**), our senders 205.0/s. Fee window: our miners took **85% of fees with 53% of blocks**; net fee cost −63 tKAS (`tn10-storm-2026-09-26-r7/README.md` l.64–93).
 - **Mainnet:** the 1.337 ratio depends on DAG width at that load: **B**. Fee recapture does not apply to a no-hashrate sender: **B** (protocol logic; not tested).
 
 ### 5. api-tn10 indexer stall, 25 Sep 2026
@@ -92,7 +92,7 @@ Mainnet protocol inputs (block rate, mass limits, relay floor) were read from ru
 - **Mainnet:** whether api.kaspa.org or mainnet explorers would stall under a similar flood: **C**.
 
 ### 6. Pruning outages and resyncs, 26 Sep–3 Oct 2026
-- **27 Sep (A):** pruning-point UTXO verification took ~13.3 GB temp disk (free 16.6 → 3.2 GB) and the watchdog stopped n0 (HANDOFF, 27 Sep 19:45 entry). 26 Sep 07:07–07:10: pruning/compaction grew consensus data about 75 → 89 GB and free space reached zero (`grok-bot-vprogs-round4/README.md` l.39).
+- **27 Sep (A):** pruning-point UTXO verification took ~13.3 GB temp disk (free 16.6 → 3.2 GB) and the watchdog stopped n0 (HANDOFF, 27 Sep 19:45 entry). 26 Sep 07:07–07:10: pruning/compaction grew consensus data about 75 → 89 GB and free space reached zero (`tn10-storm-2026-09-26-r4/README.md` l.39).
 - **29/30 Sep resync (A):** pruned resync after a reboot. UTXO set download 22:47:49 → ~23:17 (~29 min), **~322.4M UTXOs**; miners started 30 Sep 00:25, about **2 h** after the 22:25 start (HANDOFF l.221–224).
 - **3 Oct crash and resync (A):** disk drop described above; n0 frozen at 1.5 GB free. Wipe of the 110 GB datadir at 09:54:49; headers done 10:44:38; UTXO download from one peer at only **~0.48M UTXOs/min** (box idle, peer had 3.9 s ping); restart with `--connect` to three ~100 ms peers at 11:23:18 gave **~10M/min**; synced **13:22:39** (~3 h 28 min after start), set **324.72M UTXOs**, DB 70 GB (HANDOFF 3 Oct section; `logs/round4/n0-resync-monitor.log`).
 - **Mainnet:** pruning disk spikes and slow single-peer IBD are node behaviours that could matter on any network: **B**. Their size on mainnet depends on mainnet's UTXO set and peers: **C**.
@@ -194,8 +194,8 @@ Sources: this repo's `README.md` (data in `data/legs_box.csv`), `run/final-numbe
 
 ## Where these labels were applied
 
-The same A/B/C labels were applied in place on 4 Oct 2026 to the files in STP-KAS repos that make mainnet claims about these storms: this repo (`README.md`, `methodology.md`), `grok-bot-vprogs-round1-public`, `grok-bot-vprogs-round2`, `tn10-vprogs-build-opinion`, `tn10-vprogs-grokbot-opinion`, and two private working repos. Files whose only mention of mainnet is a scope note ("TN10 only, nothing touched mainnet") were left as they were.
+The same A/B/C labels were applied in place on 4 Oct 2026 to the files in STP-KAS repos that make mainnet claims about these storms: this repo (`README.md`, `methodology.md`), `tn10-storm-2026-09-25-r1`, `tn10-storm-2026-09-25-r2`, `tn10-storm-2026-09-26-build-opinion`, `tn10-storm-2026-09-26-bot-opinion`, and two private working repos. Files whose only mention of mainnet is a scope note ("TN10 only, nothing touched mainnet") were left as they were.
 
 ## Sources
 
-Box logs and notes: `run/timeline.md`, `run/final-numbers-2026-10-02.md`, `build-brief-how-box-storm-works-2026-10-02.md`; the private analysis repo's `BOX-REPORT.md`, `REPORT.md`, `mainnet-cost.md` and `desk-public-read-2026-10-02.md`; this repo's `README.md` and `data/`; the break-test `HANDOFF.md`, `findings/`, `logs/round4/n0-disk-watchdog.log`, `logs/round4/n0-resync-monitor.log` and `scripts/nettps.sh`; the 25 Sep indexer-stall note; the round 1–8 repos and `tn10-vprogs-stress-findings`; the 18–21 Sep full audit of the CPU-farm test; private desk notes from 2 Oct; rusty-kaspa PR #1004 (read 4 Oct 2026).
+Box logs and notes: `run/timeline.md`, `run/final-numbers-2026-10-02.md`, `build-brief-how-box-storm-works-2026-10-02.md`; the private analysis repo's `BOX-REPORT.md`, `REPORT.md`, `mainnet-cost.md` and `desk-public-read-2026-10-02.md`; this repo's `README.md` and `data/`; the break-test `HANDOFF.md`, `findings/`, `logs/round4/n0-disk-watchdog.log`, `logs/round4/n0-resync-monitor.log` and `scripts/nettps.sh`; the 25 Sep indexer-stall note; the round 1–8 repos and `tn10-storm-2026-09-25`; the 18–21 Sep full audit of the CPU-farm test; private desk notes from 2 Oct; rusty-kaspa PR #1004 (read 4 Oct 2026).

@@ -3,6 +3,10 @@
 > Good intentions, shaky hands. STP does not know what he is doing. We test, we write down what we think we saw, and that is the whole product. A number here is not the truth. A chart is not the truth. Any other sentence that sounds sure of itself is not the truth either. Do not count any of it as a claim.
 >
 > [Disclaimer](DISCLAIMER.md)
+>
+> **Part of [tn-master](https://github.com/STP-KAS/tn-master)**, the map of every TN10 storm. Renamed on 11 Oct 2026 from `tn10-storm-2026-10-public-report`; old links redirect here.
+>
+> ← previous storm: [tn10-storm-2026-09-27-desk-miners](https://github.com/STP-KAS/tn10-storm-2026-09-27-desk-miners) | next storm: [tn10-storm-2026-10-01-analysis](https://github.com/STP-KAS/tn10-storm-2026-10-01-analysis) →
 
 # TN10 stress test, 1–3 Oct 2026: public report
 
@@ -41,7 +45,7 @@ Written Sat 3 Oct 2026, about 18:00 CEST, and reviewed about 18:25 CEST, by Grok
 | Leg 4 ran: Fri 21:52 → Sat 01:06, 14,018,548 included | runner logs, `run/timeline.md` |
 | stp's block share 50–63% while the box miners ran (L1 P2W 60.3%, L2 62.8%, L3 58.1%, L4 52.6%), 25.1% over the first night, 29.7% before the storm | `data/block_share_legs.csv`, `data/block_share_sampler2.csv` |
 | Public API: lag up to 704 s on Thursday; full freeze ≈22:02–23:28 on Friday (HTTP 503 every sample 22:09–23:27); every episode observed to its end was back to normal 2–5 min after its last bad sample | `data/api_events.csv`, `data/api_windows_vs_load.csv` |
-| Earlier test (25 Sep): the same API's indexer froze at 21:55:38 CEST and was still frozen (HTTP 503) on 29 Sep 12:56 CEST | STP-KAS/tn10-indexer-stall-2026-09 `README.md` l.7–9, l.33–36 ([below](#api-recovery-vs-earlier-tests)) |
+| Earlier test (25 Sep): the same API's indexer froze at 21:55:38 CEST and was still frozen (HTTP 503) on 29 Sep 12:56 CEST | STP-KAS/tn10-storm-2026-09-25-indexer-stall `README.md` l.7–9, l.33–36 ([below](#api-recovery-vs-earlier-tests)) |
 | Mainnet parameters: 10 BPS, 500,000 g block mass, minimum relay fee 100 sompi/g; live normal estimate 100 sompi/g on 3 Oct (reference input from source code and the live API, not a storm result) | rusty-kaspa `01b532e`, PR #1004, `data/sources/api.kaspa.org-info-fee-estimate.json` |
 | Mainnet plain cost of the whole test: 45,464 KAS at 100 sompi/g, 68,195 KAS at 150 (**B**: arithmetic, not measured) | `data/mainnet_actual_test.csv` |
 | Desk batch `accepted` through Fri 09:40:33.393 is 15,697,431 (submitted 16,972,123, rejected 1,274,692). Whole file through Fri 12:03:07: 15,743,212 (submitted 17,415,510, rejected 1,672,298) | `data/desk_batch_hours.csv` |
@@ -258,7 +262,7 @@ How this lines up with load:
 - Timeouts (20 s) on `/info/health` happened at all hours, including Saturday with no load from us (38 of 505 samples). They are not counted as stalls.
 - The 5.4-h "coinbase lag" on Saturday morning is not a freeze. n0 saw stp mine 0 blocks then (`node_ours_last_window` = 0), so there was no newer coinbase to show.
 
-**(2) The earlier test.** Source: stp's private note **STP-KAS/tn10-indexer-stall-2026-09, `README.md` (commit `22780de`, 29 Sep 2026)**:
+**(2) The earlier test.** Source: stp's private note **STP-KAS/tn10-storm-2026-09-25-indexer-stall, `README.md` (commit `22780de`, 29 Sep 2026)**:
 
 - l.7–9: "`api-tn10.kaspa.org` … accepted-transaction processing has not moved since 2026-09-25 19:55:38Z (21:55:38 CEST). `/info/health` returns HTTP 503 with `database.isSynced:false`."
 - l.30: "Checked again: still frozen, 503 | 29 Sep 10:56Z | 12:56".
@@ -485,7 +489,7 @@ All rate × shape combinations, 1 h and 24 h. The 30 min to 24 h rows for every 
 | Leg staged at 17:31 | **It ran**: Fri 21:52–Sat 01:06, 14.0M included, best 60 min 2,518/s | ✅ (new in this report) |
 | API froze/lagged on some addresses | qzffl5 view lagged 10.9 min (Thu) and **froze ~85 min (Fri ≈22:02–23:28)**; qp4jge: one slow call, result not saved | ✅ for qzffl5; **UNVERIFIED** for qp4jge |
 | API freeze only around the heaviest load, recovered fairly quickly (stp) | All stall episodes were under high load, including other senders' load, but not exactly at our peaks (see table). Each one observed to its end recovered 2–5 min after its last bad sample; the longest lasted 86 min | ✅ recovery; ⚠️ "at the peaks" only roughly |
-| Earlier test: freeze lasted days (stp) | REST API indexer frozen ≥3 d 15 h from 25 Sep 21:55 CEST (tn10-indexer-stall-2026-09 README l.7–9, l.30, l.36). Stream/explorer freeze: no file | ✅ for the REST API; **UNVERIFIED** for the stream/explorer |
+| Earlier test: freeze lasted days (stp) | REST API indexer frozen ≥3 d 15 h from 25 Sep 21:55 CEST (tn10-storm-2026-09-25-indexer-stall README l.7–9, l.30, l.36). Stream/explorer freeze: no file | ✅ for the REST API; **UNVERIFIED** for the stream/explorer |
 | KNS 18,524 names, ownership verified | 9,509 + 8,258 + 757 verified on api.knsdomains.org | ✅ |
 | qp4jge 10.66M txs | Value from a logged API call; the raw response was not saved | ⚠️ attributed |
 | Desk ack totals to Fri 09:40: 16,972,123 / 15,697,431 / 1,274,692 | Recomputed from the desk sender log, batch lines at or before Fri 09:40:33.393 | ✅ as a sum of the `accepted` field. That field is a submit result. The duplicate split was not counted |
@@ -535,9 +539,9 @@ Each item fixes a gap from this run.
   - n0 kaspad log `rusty-kaspa.log`
   - `artifacts/kaspa-tn10/share.csv` (independent share sampler)
   - `artifacts/kns-tn10/*`
-- Private analysis repo (STP-KAS/tn10-storm-2026-10-analysis): `analysis/BOX-REPORT.md`, `analysis/desk-public-read-2026-10-02.md`, `desk/sender.jsonl`.
+- Private analysis repo (STP-KAS/tn10-storm-2026-10-01-analysis): `analysis/BOX-REPORT.md`, `analysis/desk-public-read-2026-10-02.md`, `desk/sender.jsonl`.
 - Desk check, later on Sat 3 Oct, from the desk logs. Raw logs were not published. Derived tables: `data/desk_batch_hours.csv`, `data/desk_submit_ok_peaks.csv`, `data/desk_p2w_peaks.csv`, `data/desk_final_lines.csv`, `data/desk_long_run.csv`, rebuilt by `data/desk_check.py`. The desk `public-api-calls.log` was read for request times only (281 lines, last Fri 20:35:23, no response body).
-- Earlier test, private note STP-KAS/tn10-indexer-stall-2026-09 (commit `22780de`): `README.md` l.7–9, 12–14, 30, 33–36; `evidence/api-health-2026-09-29.txt` l.3. Box file `artifacts/stress-tests/dryrun/api-health-min-dry.jsonl` l.2 (first healthy sample, 1 Oct 18:27:39 CEST).
+- Earlier test, private note STP-KAS/tn10-storm-2026-09-25-indexer-stall (commit `22780de`): `README.md` l.7–9, 12–14, 30, 33–36; `evidence/api-health-2026-09-29.txt` l.3. Box file `artifacts/stress-tests/dryrun/api-health-min-dry.jsonl` l.2 (first healthy sample, 1 Oct 18:27:39 CEST).
 - Public data:
   - `api-tn10.kaspa.org/transactions/count/2026-10-0{1,2,3}`, saved in `data/sources/`
   - `api.kaspa.org/info/fee-estimate`, `/info/price`, `/info/blockdag`
