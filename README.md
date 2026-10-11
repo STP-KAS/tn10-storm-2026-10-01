@@ -6,7 +6,7 @@
 >
 > **Part of [tn-master](https://github.com/STP-KAS/tn-master)**, the map of every TN10 storm. Renamed on 11 Oct 2026 from `tn10-storm-2026-10-public-report`; old links redirect here.
 >
-> ← previous storm: [tn10-storm-2026-09-27-desk-miners](https://github.com/STP-KAS/tn10-storm-2026-09-27-desk-miners) | next storm: [tn10-storm-2026-10-01-analysis](https://github.com/STP-KAS/tn10-storm-2026-10-01-analysis) →
+> ← previous storm: [tn10-storm-2026-09-27-desk-miners-public](https://github.com/STP-KAS/tn10-storm-2026-09-27-desk-miners-public) | next storm: [tn10-storm-2026-10-01-analysis-public](https://github.com/STP-KAS/tn10-storm-2026-10-01-analysis-public) →
 
 # TN10 stress test, 1–3 Oct 2026: public report
 
@@ -539,7 +539,7 @@ Each item fixes a gap from this run.
   - n0 kaspad log `rusty-kaspa.log`
   - `artifacts/kaspa-tn10/share.csv` (independent share sampler)
   - `artifacts/kns-tn10/*`
-- Private analysis repo (STP-KAS/tn10-storm-2026-10-01-analysis): `analysis/BOX-REPORT.md`, `analysis/desk-public-read-2026-10-02.md`, `desk/sender.jsonl`.
+- Private analysis repo (STP-KAS/tn10-storm-2026-10-01-analysis-public): `analysis/BOX-REPORT.md`, `analysis/desk-public-read-2026-10-02.md`, `desk/sender.jsonl`.
 - Desk check, later on Sat 3 Oct, from the desk logs. Raw logs were not published. Derived tables: `data/desk_batch_hours.csv`, `data/desk_submit_ok_peaks.csv`, `data/desk_p2w_peaks.csv`, `data/desk_final_lines.csv`, `data/desk_long_run.csv`, rebuilt by `data/desk_check.py`. The desk `public-api-calls.log` was read for request times only (281 lines, last Fri 20:35:23, no response body).
 - Earlier test, private note STP-KAS/tn10-storm-2026-09-25-indexer-stall (commit `22780de`): `README.md` l.7–9, 12–14, 30, 33–36; `evidence/api-health-2026-09-29.txt` l.3. Box file `artifacts/stress-tests/dryrun/api-health-min-dry.jsonl` l.2 (first healthy sample, 1 Oct 18:27:39 CEST).
 - Public data:
